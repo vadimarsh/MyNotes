@@ -1,0 +1,16 @@
+<resources>
+    <string name="app_name">MyNotes</string>
+    <string name="message_dialog_note_delete">Вы уверены что хотите удалить эту заметку?</string>
+    <string name="title_dialog_note_delete">Подтвердите действие</string>
+    <string name="text_button_confirm">Подвердить</string>
+    <string name="text_button_cancel">Отменить</string>
+    <string name="et_note_hint">Заголовок</string>
+    <string name="et_note_content_hint">Тело заметки</string>
+    <string name="et_note_deadline_hint">Дедлайн?</string>
+    <string name="msg_note_empty_error">Необходимо заполнить заголовок или тело заметки</string>
+    <string name="msg_note_succes">Изменения внесены упешно</string>
+    <string name="msg_note_added">Новая заметка добавлена</string>
+    <string name="date_format_pattern">dd-MM-yyyy</string>
+    <string name="menu_item_settings">Настройки</string>
+    <string name="menu_item_save">Сохранить</string>
+</resources>
