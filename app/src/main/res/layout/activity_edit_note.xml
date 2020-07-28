@@ -66,24 +66,28 @@
             android:layout_height="0dp"
             android:layout_weight="1"
             android:orientation="horizontal"
-            android:visibility="gone">
+            android:visibility="gone"
+            tools:visibility="visible">
 
             <EditText
                 android:id="@+id/et_deadline"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
 
+                android:layout_weight="1"
                 android:clickable="false"
                 android:ems="10"
                 android:enabled="false"
-                android:inputType="date" />
+                android:inputType="date"
+                tools:visibility="visible" />
 
             <ImageButton
                 android:id="@+id/ibt_calendar"
                 style="@android:style/Widget.Material.Light.ImageButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:srcCompat="@drawable/ic_calendar" />
+                app:srcCompat="@drawable/ic_calendar"
+                tools:visibility="visible" />
         </LinearLayout>
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

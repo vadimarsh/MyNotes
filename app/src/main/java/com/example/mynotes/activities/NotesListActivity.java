@@ -19,7 +19,7 @@ import com.example.mynotes.data.NotesRepository;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 
-public class MainActivity extends AppCompatActivity {
+public class NotesListActivity extends AppCompatActivity {
     private Toolbar myToolbar;
     private RecyclerView recyclerView;
     private FloatingActionButton fabAdd;
@@ -29,7 +29,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_notes_list);
         init();
     }
 
@@ -48,7 +48,7 @@ public class MainActivity extends AppCompatActivity {
         fabAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(MainActivity.this, EditNoteActivity.class));
+                startActivity(new Intent(NotesListActivity.this, EditNoteActivity.class));
             }
         });
 
@@ -70,8 +70,14 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         if (R.id.item_settings == item.getItemId()) {
-            startActivity(new Intent(MainActivity.this, SettingsActivity.class));
+            startActivity(new Intent(NotesListActivity.this, SettingsActivity.class));
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        finish();
     }
 }

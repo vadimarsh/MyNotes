@@ -62,7 +62,7 @@ public class SettingsActivity extends AppCompatActivity {
                     etPin.setText("");
                 } else {
                     keyStore.saveNew(enteredPin);
-                    Intent intent = new Intent(SettingsActivity.this, MainActivity.class);
+                    Intent intent = new Intent(SettingsActivity.this, NotesListActivity.class);
                     startActivity(intent);
                 }
             }

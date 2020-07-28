@@ -105,7 +105,7 @@ public class AuthorizationActivity extends AppCompatActivity {
 
         if (enteredPin.length() == PIN_LENGTH) {
             if (keystore.checkPin(enteredPin)) {
-                Intent intent = new Intent(AuthorizationActivity.this, MainActivity.class);
+                Intent intent = new Intent(AuthorizationActivity.this, NotesListActivity.class);
                 startActivity(intent);
             } else {
                 showToast(getString(R.string.auth_invalid_pin));

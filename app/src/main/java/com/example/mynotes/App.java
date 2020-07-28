@@ -4,8 +4,8 @@ import android.app.Application;
 
 import com.example.mynotes.data.NotesRepository;
 import com.example.mynotes.data.SimpleNotesRepository;
+import com.example.mynotes.service.EncryptedKeystore;
 import com.example.mynotes.service.Keystore;
-import com.example.mynotes.service.SimpleKeystore;
 
 public class App extends Application {
     private static NotesRepository notesRepository;
@@ -29,7 +29,7 @@ public class App extends Application {
         super.onCreate();
         instance = this;
         notesRepository = new SimpleNotesRepository();
-        keystore = new SimpleKeystore();
+        keystore = new EncryptedKeystore();
 
     }
 }
