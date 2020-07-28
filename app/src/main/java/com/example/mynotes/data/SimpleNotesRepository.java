@@ -14,24 +14,6 @@ public class SimpleNotesRepository implements NotesRepository {
 
     }
 
-    private void sortByDate() {
-        Collections.sort(notelist, new Comparator<Note>() {
-            @Override
-            public int compare(Note o1, Note o2) {
-                return -o1.getDateDeadline().compareTo(o2.getDateDeadline());
-            }
-        });
-        Collections.sort(notelist, new Comparator<Note>() {
-
-            @Override
-            public int compare(Note o1, Note o2) {
-                int result = 0;
-                result = (!o1.getIsDeadLine()) && (o2.getIsDeadLine()) ? 1 : -1;
-                return result;
-            }
-        });
-    }
-
     @Override
     public Note getNoteById(int id) {
         for (Note note : notelist
@@ -75,6 +57,23 @@ public class SimpleNotesRepository implements NotesRepository {
     @Override
     public void updateNote(Note note) {
         sortByDate();
+    }
 
+    private void sortByDate() {
+        Collections.sort(notelist, new Comparator<Note>() {
+            @Override
+            public int compare(Note o1, Note o2) {
+                return -o1.getDateDeadline().compareTo(o2.getDateDeadline());
+            }
+        });
+        Collections.sort(notelist, new Comparator<Note>() {
+
+            @Override
+            public int compare(Note o1, Note o2) {
+                int result = 0;
+                result = (!o1.getIsDeadLine()) && (o2.getIsDeadLine()) ? 1 : -1;
+                return result;
+            }
+        });
     }
 }

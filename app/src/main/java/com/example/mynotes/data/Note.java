@@ -6,15 +6,15 @@ public class Note {
     private int id;
     private String title;
     private Date dateDeadline;
-    private boolean isDeadLine;
+    private boolean hasDeadLine;
     private String content;
 
-    public Note(int id, String title, String content, Date dateDeadline, boolean isDeadLine) {
+    public Note(int id, String title, String content, Date dateDeadline, boolean hasDeadLine) {
         this.id = id;
         this.title = title;
         this.content = content;
         this.dateDeadline = dateDeadline;
-        this.isDeadLine = isDeadLine;
+        this.hasDeadLine = hasDeadLine;
 
     }
 
@@ -43,11 +43,11 @@ public class Note {
     }
 
     public boolean getIsDeadLine() {
-        return isDeadLine;
+        return hasDeadLine;
     }
 
     public void setIsDeadLine(boolean isDeadLine) {
-        this.isDeadLine = isDeadLine;
+        this.hasDeadLine = isDeadLine;
     }
 
     public String getContent() {

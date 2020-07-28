@@ -52,6 +52,7 @@ public class EditNoteActivity extends AppCompatActivity {
     }
 
     private void fillViews(int noteid) {
+        myToolbar.setTitle(getString(R.string.toolbar_title_edit));
         editedNote = App.getNotesRepository().getNoteById(noteid);
         etTitle.setText(editedNote.getTitle());
         etContent.setText(editedNote.getContent());
@@ -106,6 +107,7 @@ public class EditNoteActivity extends AppCompatActivity {
             }
         });
         myToolbar = findViewById(R.id.my_toolbar);
+        myToolbar.setTitle(getString(R.string.toolbar_title_new));
         setSupportActionBar(myToolbar);
     }
 
@@ -125,7 +127,7 @@ public class EditNoteActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    private void showMessage(String message) {
+    private void showToast(String message) {
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
 
     }
@@ -145,7 +147,7 @@ public class EditNoteActivity extends AppCompatActivity {
         }
 
         if (titleNote.isEmpty() && contentNote.isEmpty()) {
-            showMessage(getString(R.string.msg_note_empty_error));
+            showToast(getString(R.string.msg_note_empty_error));
         } else {
             if (editedNoteID >= 0) {
                 editedNote.setTitle(titleNote);
@@ -153,13 +155,13 @@ public class EditNoteActivity extends AppCompatActivity {
                 editedNote.setIsDeadLine(isDeadline);
                 editedNote.setDateDeadline(dateDeadline);
                 App.getNotesRepository().updateNote(editedNote);
-                showMessage(getString(R.string.msg_note_succes));
+                showToast(getString(R.string.msg_note_succes));
             } else {
                 Note newNote = new Note(App.getNotesRepository().getNotes().size(), titleNote, contentNote, dateDeadline, isDeadline);
                 App.getNotesRepository().saveNote(newNote);
 
 
-                showMessage(getString(R.string.msg_note_added));
+                showToast(getString(R.string.msg_note_added));
             }
 
             finish();

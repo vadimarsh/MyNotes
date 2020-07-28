@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+
+
+    tools:context=".activities.AuthorizationActivity">
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/my_toolbar"
+        style="@style/Toolbar"
+        android:layout_width="0dp"
+        android:layout_height="?attr/actionBarSize"
+        android:background="?attr/colorPrimary"
+        android:elevation="@dimen/elevation"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <LinearLayout
+        android:id="@+id/llContent"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/my_toolbar">
+
+        <TextView
+            android:id="@+id/tvEnterPin"
+            style="@style/TextAppearance.AppCompat.Display1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_margin="@dimen/view_margin"
+            android:text="@string/tv_enter_pin" />
+
+        <LinearLayout
+            android:id="@+id/ll_placeholders"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_margin="@dimen/view_margin"
+            android:orientation="horizontal">
+
+            <View
+                android:id="@+id/plcHolder1"
+                android:layout_width="@dimen/placeholder_size"
+                android:layout_height="@dimen/placeholder_size"
+                android:layout_marginStart="@dimen/placeholder_margin"
+                android:layout_marginEnd="@dimen/placeholder_margin"
+                android:layout_weight="1"
+                android:background="@drawable/pin_placeholder_empty" />
+
+            <View
+                android:id="@+id/plcHolder2"
+                android:layout_width="@dimen/placeholder_size"
+                android:layout_height="@dimen/placeholder_size"
+                android:layout_marginStart="@dimen/placeholder_margin"
+                android:layout_marginEnd="@dimen/placeholder_margin"
+                android:layout_weight="1"
+                android:background="@drawable/pin_placeholder_empty" />
+
+            <View
+                android:id="@+id/plcHolder3"
+                android:layout_width="@dimen/placeholder_size"
+                android:layout_height="@dimen/placeholder_size"
+                android:layout_marginStart="@dimen/placeholder_margin"
+                android:layout_marginEnd="@dimen/placeholder_margin"
+                android:layout_weight="1"
+                android:background="@drawable/pin_placeholder_empty" />
+
+            <View
+                android:id="@+id/plcHolder4"
+                android:layout_width="@dimen/placeholder_size"
+                android:layout_height="@dimen/placeholder_size"
+                android:layout_marginStart="@dimen/placeholder_margin"
+                android:layout_marginEnd="@dimen/placeholder_margin"
+                android:layout_weight="1"
+                android:background="@drawable/pin_placeholder_empty" />
+        </LinearLayout>
+
+        <GridLayout
+            android:id="@+id/gl_keyboard"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_margin="@dimen/view_margin"
+            android:columnCount="3"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/btn_1"
+                android:text="@string/keyboard_1" />
+
+            <Button
+                android:id="@+id/btn_2"
+                android:text="@string/keyboard_2" />
+
+            <Button
+                android:id="@+id/btn_3"
+                android:text="@string/keyboard_3" />
+
+            <Button
+                android:id="@+id/btn_4"
+                android:text="@string/keyboard_4" />
+
+            <Button
+                android:id="@+id/btn_5"
+                android:text="@string/keyboard_5" />
+
+            <Button
+                android:id="@+id/btn_6"
+                android:text="@string/keyboard_6" />
+
+            <Button
+                android:id="@+id/btn_7"
+                android:text="@string/keyboard_7" />
+
+            <Button
+                android:id="@+id/btn_8"
+                android:text="@string/keyboard_8" />
+
+            <Button
+                android:id="@+id/btn_9"
+                android:text="@string/keyboard_9" />
+
+            <Button
+                android:id="@+id/btn_0"
+                android:layout_column="1"
+                android:text="@string/keyboard_0" />
+
+            <Button
+                android:id="@+id/btn_backspace"
+                android:text="@string/keyboard_back" />
+        </GridLayout>
+    </LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -75,7 +75,7 @@ public class NotesRecyclerAdapter extends RecyclerView.Adapter<NotesRecyclerAdap
 
         ViewHolder(View itemView) {
             super(itemView);
-            tvTitle = itemView.findViewById(R.id.tv_title);
+            tvTitle = itemView.findViewById(R.id.tv_explanation);
             tvDescription = itemView.findViewById(R.id.tv_content);
             tvDate = itemView.findViewById(R.id.tv_deadline);
 
