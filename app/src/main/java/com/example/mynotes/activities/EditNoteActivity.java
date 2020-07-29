@@ -56,7 +56,7 @@ public class EditNoteActivity extends AppCompatActivity {
         editedNote = App.getNotesRepository().getNoteById(noteid);
         etTitle.setText(editedNote.getTitle());
         etContent.setText(editedNote.getContent());
-        if (editedNote.getIsDeadLine()) {
+        if (editedNote.getHasDeadLine()) {
             llDeadlineBlock.setVisibility(View.VISIBLE);
             chbxDeadLine.setChecked(true);
 
@@ -152,12 +152,12 @@ public class EditNoteActivity extends AppCompatActivity {
             if (editedNoteID >= 0) {
                 editedNote.setTitle(titleNote);
                 editedNote.setContent(contentNote);
-                editedNote.setIsDeadLine(isDeadline);
+                editedNote.setHasDeadLine(isDeadline);
                 editedNote.setDateDeadline(dateDeadline);
                 App.getNotesRepository().updateNote(editedNote);
                 showToast(getString(R.string.msg_note_succes));
             } else {
-                Note newNote = new Note(App.getNotesRepository().getNotes().size(), titleNote, contentNote, dateDeadline, isDeadline);
+                Note newNote = new Note(titleNote, contentNote, dateDeadline, isDeadline);
                 App.getNotesRepository().saveNote(newNote);
 
 

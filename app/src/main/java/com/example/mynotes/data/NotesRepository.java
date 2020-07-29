@@ -9,8 +9,6 @@ public interface NotesRepository {
 
     void saveNote(Note note);
 
-    void deleteById(int id);
-
     void deleteById(Note note);
 
     void updateNote(Note note);

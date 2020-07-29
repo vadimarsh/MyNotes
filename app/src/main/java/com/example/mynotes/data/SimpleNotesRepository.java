@@ -38,18 +38,6 @@ public class SimpleNotesRepository implements NotesRepository {
     }
 
     @Override
-    public void deleteById(int id) {
-        Note deleted = null;
-        for (Note note : notelist
-        ) {
-            if (note.getId() == id) {
-                deleted = note;
-            }
-        }
-        notelist.remove(deleted);
-    }
-
-    @Override
     public void deleteById(Note note) {
         notelist.remove(note);
     }
@@ -71,7 +59,7 @@ public class SimpleNotesRepository implements NotesRepository {
             @Override
             public int compare(Note o1, Note o2) {
                 int result = 0;
-                result = (!o1.getIsDeadLine()) && (o2.getIsDeadLine()) ? 1 : -1;
+                result = (!o1.getHasDeadLine()) && (o2.getHasDeadLine()) ? 1 : -1;
                 return result;
             }
         });

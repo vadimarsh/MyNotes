@@ -2,8 +2,8 @@ package com.example.mynotes;
 
 import android.app.Application;
 
+import com.example.mynotes.data.DBNotesRepository;
 import com.example.mynotes.data.NotesRepository;
-import com.example.mynotes.data.SimpleNotesRepository;
 import com.example.mynotes.service.EncryptedKeystore;
 import com.example.mynotes.service.Keystore;
 
@@ -28,7 +28,7 @@ public class App extends Application {
     public void onCreate() {
         super.onCreate();
         instance = this;
-        notesRepository = new SimpleNotesRepository();
+        notesRepository = new DBNotesRepository();
         keystore = new EncryptedKeystore();
 
     }

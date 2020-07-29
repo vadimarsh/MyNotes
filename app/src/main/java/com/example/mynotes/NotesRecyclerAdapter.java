@@ -53,7 +53,7 @@ public class NotesRecyclerAdapter extends RecyclerView.Adapter<NotesRecyclerAdap
             holder.tvDescription.setText(noteContent);
             holder.tvDescription.setVisibility(View.VISIBLE);
         }
-        if (notes.get(position).getIsDeadLine()) {
+        if (notes.get(position).getHasDeadLine()) {
             holder.tvDate.setText(formatter.format(dateDeadline));
             holder.tvDate.setVisibility(View.VISIBLE);
         }
@@ -112,8 +112,11 @@ public class NotesRecyclerAdapter extends RecyclerView.Adapter<NotesRecyclerAdap
             dialogBuilder.setIcon(R.drawable.ic_delete_forever_black_24dp);
             dialogBuilder.setPositiveButton(R.string.text_button_confirm, new DialogInterface.OnClickListener() {
                 public void onClick(DialogInterface dialog, int id) {
+                    notes.remove(note);
                     notesRepository.deleteById(note);
+
                     NotesRecyclerAdapter.this.notifyItemRemoved(position);
+                    //NotesRecyclerAdapter.this.notifyDataSetChanged(); //Почему-то коряво работает, пришлось вставить notifyItemRemoved()
                 }
             });
             dialogBuilder.setNegativeButton(R.string.text_button_cancel, new DialogInterface.OnClickListener() {
