@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -20,11 +21,10 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 
 public class NotesListActivity extends AppCompatActivity {
-    private Toolbar myToolbar;
     private RecyclerView recyclerView;
     private FloatingActionButton fabAdd;
     private NotesRecyclerAdapter notesRecyclerAdapter;
-    private NotesRepository notesRepository;
+    private long mlsecBackPressed;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,15 +36,12 @@ public class NotesListActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        notesRepository = App.getNotesRepository();
-        notesRecyclerAdapter = new NotesRecyclerAdapter(this, notesRepository.getNotes());
-        recyclerView.setLayoutManager(new LinearLayoutManager(this, RecyclerView.VERTICAL, false));
-        recyclerView.setAdapter(notesRecyclerAdapter);
+        notesRecyclerAdapter.setNotes(App.getNotesRepository().getNotes());
+        notesRecyclerAdapter.notifyDataSetChanged();
     }
 
     private void init() {
         fabAdd = findViewById(R.id.fabAddNote);
-
         fabAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -52,17 +49,20 @@ public class NotesListActivity extends AppCompatActivity {
             }
         });
 
-        myToolbar = findViewById(R.id.my_toolbar);
+        Toolbar myToolbar = findViewById(R.id.my_toolbar);
         setSupportActionBar(myToolbar);
-
         recyclerView = findViewById(R.id.recycleView);
+        NotesRepository notesRepository = App.getNotesRepository();
+        notesRecyclerAdapter = new NotesRecyclerAdapter(this, notesRepository.getNotes());
+        recyclerView.setLayoutManager(new LinearLayoutManager(this, RecyclerView.VERTICAL, false));
+        recyclerView.setAdapter(notesRecyclerAdapter);
 
+        mlsecBackPressed = System.currentTimeMillis();
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.main_menu, menu);
-        menu.findItem(R.id.item_save).setVisible(false);
+        getMenuInflater().inflate(R.menu.menu_notes_list_activity, menu);
         return true;
 
     }
@@ -75,9 +75,15 @@ public class NotesListActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+
     @Override
     public void onBackPressed() {
-        super.onBackPressed();
-        finishAffinity();
+        if (mlsecBackPressed + 2000 > System.currentTimeMillis()) {
+            super.onBackPressed();
+            finishAffinity();
+        } else {
+            Toast.makeText(getBaseContext(), R.string.msg_confirm_exit, Toast.LENGTH_SHORT).show();
+        }
+        mlsecBackPressed = System.currentTimeMillis();
     }
 }

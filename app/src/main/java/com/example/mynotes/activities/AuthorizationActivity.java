@@ -17,7 +17,6 @@ import static com.example.mynotes.service.Keystore.PIN_LENGTH;
 
 public class AuthorizationActivity extends AppCompatActivity {
     private Keystore keystore;
-    private Toolbar myToolbar;
     private Button[] numbButton = new Button[10];
     private Button bckspcButton;
     private String enteredPin;
@@ -38,6 +37,7 @@ public class AuthorizationActivity extends AppCompatActivity {
             init();
         } else {
             Intent intent = new Intent(AuthorizationActivity.this, SettingsActivity.class);
+           // intent.putExtra("no_pin", true);
             startActivity(intent);
         }
     }
@@ -45,19 +45,9 @@ public class AuthorizationActivity extends AppCompatActivity {
     private void init() {
 
         enteredPin = "";
-        myToolbar = findViewById(R.id.my_toolbar);
+        Toolbar myToolbar = findViewById(R.id.my_toolbar);
         setSupportActionBar(myToolbar);
 
-        numbButton[0] = findViewById(R.id.btn_0);
-        numbButton[1] = findViewById(R.id.btn_1);
-        numbButton[2] = findViewById(R.id.btn_2);
-        numbButton[3] = findViewById(R.id.btn_3);
-        numbButton[4] = findViewById(R.id.btn_4);
-        numbButton[5] = findViewById(R.id.btn_5);
-        numbButton[6] = findViewById(R.id.btn_6);
-        numbButton[7] = findViewById(R.id.btn_7);
-        numbButton[8] = findViewById(R.id.btn_8);
-        numbButton[9] = findViewById(R.id.btn_9);
         bckspcButton = findViewById(R.id.btn_backspace);
         bckspcButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -70,27 +60,18 @@ public class AuthorizationActivity extends AppCompatActivity {
         placeholder[1] = findViewById(R.id.plcHolder2);
         placeholder[2] = findViewById(R.id.plcHolder3);
         placeholder[3] = findViewById(R.id.plcHolder4);
-        for (Button but : numbButton
-        ) {
-            final String numb = String.valueOf(but.getText());
-            but.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    putNumbToPin(numb);
-                    checkPin();
-                }
-            });
-        }
+
 
     }
 
-    private void putNumbToPin(String numb) {
+    public void putNumbToPin(View numbButton) {
         if (enteredPin.length() < PIN_LENGTH) {
-            enteredPin += numb;
             setPlaceholderImage(true);
+            String numb = String.valueOf(((Button) numbButton).getText());
+            enteredPin += numb;
             indexPlaceholder++;
-
         }
+        checkPin();
     }
 
     private void deleteNumbFromPin() {
@@ -102,20 +83,17 @@ public class AuthorizationActivity extends AppCompatActivity {
     }
 
     private void checkPin() {
-
         if (enteredPin.length() == PIN_LENGTH) {
             if (keystore.checkPin(enteredPin)) {
                 Intent intent = new Intent(AuthorizationActivity.this, NotesListActivity.class);
                 startActivity(intent);
             } else {
-                showToast(getString(R.string.auth_invalid_pin));
+                Toast.makeText(this, getString(R.string.auth_invalid_pin), Toast.LENGTH_SHORT).show();
+                for (int i = 0; i < 4; i++) {
+                    deleteNumbFromPin();
+                }
             }
         }
-    }
-
-    private void showToast(String message) {
-        Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
-
     }
 
     private void setPlaceholderImage(boolean filled) {
@@ -129,6 +107,6 @@ public class AuthorizationActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        finish();
+        finishAffinity();
     }
 }

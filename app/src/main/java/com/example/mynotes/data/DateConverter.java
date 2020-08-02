@@ -13,21 +13,17 @@ class DateConverter {
 
     @TypeConverter
     public static Date fromTimestamp(String value) {
-        if (value != null) {
-            try {
-                return dateFormat.parse(value);
-            } catch (ParseException e) {
-                e.printStackTrace();
-            }
-            return null;
-        } else {
-            return null;
+        Date parse = null;
+        try {
+            parse = dateFormat.parse(value);
+        } catch (ParseException e) {
+            e.printStackTrace();
         }
+        return parse;
     }
 
     @TypeConverter
     public static String dateToTimestamp(Date value) {
-
         return value == null ? null : dateFormat.format(value);
     }
 }

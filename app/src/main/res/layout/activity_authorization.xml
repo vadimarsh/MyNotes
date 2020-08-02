@@ -95,48 +95,60 @@
 
             <Button
                 android:id="@+id/btn_1"
+                android:onClick="putNumbToPin"
                 android:text="@string/keyboard_1" />
 
             <Button
                 android:id="@+id/btn_2"
+                android:onClick="putNumbToPin"
                 android:text="@string/keyboard_2" />
 
             <Button
                 android:id="@+id/btn_3"
+                android:onClick="putNumbToPin"
                 android:text="@string/keyboard_3" />
 
             <Button
                 android:id="@+id/btn_4"
+                android:onClick="putNumbToPin"
                 android:text="@string/keyboard_4" />
 
             <Button
                 android:id="@+id/btn_5"
+                android:onClick="putNumbToPin"
                 android:text="@string/keyboard_5" />
 
             <Button
                 android:id="@+id/btn_6"
+                android:onClick="putNumbToPin"
                 android:text="@string/keyboard_6" />
 
             <Button
                 android:id="@+id/btn_7"
+                android:onClick="putNumbToPin"
                 android:text="@string/keyboard_7" />
 
             <Button
                 android:id="@+id/btn_8"
+                android:onClick="putNumbToPin"
                 android:text="@string/keyboard_8" />
 
             <Button
                 android:id="@+id/btn_9"
+                android:onClick="putNumbToPin"
                 android:text="@string/keyboard_9" />
 
             <Button
                 android:id="@+id/btn_0"
                 android:layout_column="1"
+                android:onClick="putNumbToPin"
                 android:text="@string/keyboard_0" />
 
             <Button
                 android:id="@+id/btn_backspace"
                 android:text="@string/keyboard_back" />
         </GridLayout>
+
     </LinearLayout>
+
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -37,6 +37,10 @@ public class NotesRecyclerAdapter extends RecyclerView.Adapter<NotesRecyclerAdap
         return new ViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.activity_note_item, parent, false));
     }
 
+    public void setNotes(List<Note> notes) {
+        this.notes = notes;
+    }
+
     @Override
     public void onBindViewHolder(@NonNull NotesRecyclerAdapter.ViewHolder holder, int position) {
         SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy", Locale.US);
@@ -68,6 +72,39 @@ public class NotesRecyclerAdapter extends RecyclerView.Adapter<NotesRecyclerAdap
         return context;
     }
 
+    void deleteNote(final int position) {
+        final NotesRepository notesRepository = App.getNotesRepository();
+
+
+        androidx.appcompat.app.AlertDialog.Builder dialogBuilder = new androidx.appcompat.app.AlertDialog.Builder(context);
+        dialogBuilder.setMessage(R.string.message_dialog_note_delete);
+        dialogBuilder.setTitle(R.string.title_dialog_note_delete);
+        dialogBuilder.setIcon(R.drawable.ic_delete_forever_black_24dp);
+        dialogBuilder.setPositiveButton(R.string.text_button_confirm, new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+                Note note = notes.get(position);
+                notes.remove(note);
+                notesRepository.deleteById(note);
+
+                //NotesRecyclerAdapter.this.notifyItemRemoved(position);
+                NotesRecyclerAdapter.this.notifyDataSetChanged(); //Почему-то коряво работает, пришлось вставить notifyItemRemoved()
+            }
+        });
+        dialogBuilder.setNegativeButton(R.string.text_button_cancel, new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+            }
+        });
+        AlertDialog dialog = dialogBuilder.create();
+        dialog.show();
+    }
+
+    void editNote(int position) {
+        Intent intent = new Intent(context, EditNoteActivity.class);
+        Note note = notes.get(position);
+        intent.putExtra("edit_note_id", note.getId());
+        context.startActivity(intent);
+    }
+
     class ViewHolder extends RecyclerView.ViewHolder {
         TextView tvTitle;
         TextView tvDescription;
@@ -94,37 +131,5 @@ public class NotesRecyclerAdapter extends RecyclerView.Adapter<NotesRecyclerAdap
             });
         }
 
-
-        void editNote(int position) {
-            Intent intent = new Intent(context, EditNoteActivity.class);
-            Note note = notes.get(position);
-            intent.putExtra("edit_note_id", note.getId());
-            context.startActivity(intent);
-        }
-
-        void deleteNote(final int position) {
-            final NotesRepository notesRepository = App.getNotesRepository();
-            final Note note = notes.get(position);
-
-            androidx.appcompat.app.AlertDialog.Builder dialogBuilder = new androidx.appcompat.app.AlertDialog.Builder(context);
-            dialogBuilder.setMessage(R.string.message_dialog_note_delete);
-            dialogBuilder.setTitle(R.string.title_dialog_note_delete);
-            dialogBuilder.setIcon(R.drawable.ic_delete_forever_black_24dp);
-            dialogBuilder.setPositiveButton(R.string.text_button_confirm, new DialogInterface.OnClickListener() {
-                public void onClick(DialogInterface dialog, int id) {
-                    notes.remove(note);
-                    notesRepository.deleteById(note);
-
-                    NotesRecyclerAdapter.this.notifyItemRemoved(position);
-                    //NotesRecyclerAdapter.this.notifyDataSetChanged(); //Почему-то коряво работает, пришлось вставить notifyItemRemoved()
-                }
-            });
-            dialogBuilder.setNegativeButton(R.string.text_button_cancel, new DialogInterface.OnClickListener() {
-                public void onClick(DialogInterface dialog, int id) {
-                }
-            });
-            AlertDialog dialog = dialogBuilder.create();
-            dialog.show();
-        }
     }
 }

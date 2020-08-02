@@ -36,7 +36,6 @@ public class EditNoteActivity extends AppCompatActivity {
     private CheckBox chbxDeadLine;
     private ImageButton imgBtnCal;
     private int editedNoteID;
-    private Note editedNote;
     private SimpleDateFormat simpleDateFormat;
 
     @Override
@@ -53,19 +52,17 @@ public class EditNoteActivity extends AppCompatActivity {
 
     private void fillViews(int noteid) {
         myToolbar.setTitle(getString(R.string.toolbar_title_edit));
-        editedNote = App.getNotesRepository().getNoteById(noteid);
+        Note editedNote = App.getNotesRepository().getNoteById(noteid);
         etTitle.setText(editedNote.getTitle());
         etContent.setText(editedNote.getContent());
         if (editedNote.getHasDeadLine()) {
             llDeadlineBlock.setVisibility(View.VISIBLE);
             chbxDeadLine.setChecked(true);
-
             etDeadline.setText(simpleDateFormat.format(editedNote.getDateDeadline()));
         }
     }
 
     private void init() {
-        editedNote = null;
         final Calendar cldr = Calendar.getInstance();
         simpleDateFormat = new SimpleDateFormat("dd-MM-yyyy", Locale.US);
         etTitle = findViewById(R.id.et_title);
@@ -113,59 +110,51 @@ public class EditNoteActivity extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.main_menu, menu);
-        menu.findItem(R.id.item_settings).setVisible(false);
+        getMenuInflater().inflate(R.menu.menu_edit_activity, menu);
         return true;
-
     }
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         if (R.id.item_save == item.getItemId()) {
-            saveNote();
+            try {
+                String titleNote = etTitle.getText().toString();
+                String contentNote = etContent.getText().toString();
+                String deadlineNote = etDeadline.getText().toString();
+                Date dateDeadline = simpleDateFormat.parse(deadlineNote);
+                boolean isDeadline = chbxDeadLine.isChecked();
+                if (!titleNote.isEmpty() || !contentNote.isEmpty()) {
+
+                    if (editedNoteID >= 0) {
+                        updateNote(titleNote, contentNote, deadlineNote, isDeadline, dateDeadline);
+                    } else {
+                        addNote(titleNote, contentNote, deadlineNote, isDeadline, dateDeadline);
+                    }
+                    finish();
+                } else {
+                    Toast.makeText(this, getString(R.string.msg_note_empty_error), Toast.LENGTH_SHORT).show();
+                }
+            } catch (ParseException ex) {
+                ex.printStackTrace();
+            }
         }
         return super.onOptionsItemSelected(item);
     }
 
-    private void showToast(String message) {
-        Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
-
+    private void addNote(String titleNote, String contentNote, String deadlineNote, boolean isDeadline, Date dateDeadline) {
+        Note newNote = new Note(titleNote, contentNote, dateDeadline, isDeadline);
+        App.getNotesRepository().saveNote(newNote);
+        Toast.makeText(this, getString(R.string.msg_note_added), Toast.LENGTH_SHORT).show();
     }
 
-    private void saveNote() {
-        String titleNote = etTitle.getText().toString();
-        String contentNote = etContent.getText().toString();
-        String deadlineNote = etDeadline.getText().toString();
-        Date dateDeadline = null;
-        boolean isDeadline = chbxDeadLine.isChecked();
-
-        try {
-            dateDeadline = simpleDateFormat.parse(deadlineNote);
-
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-
-        if (titleNote.isEmpty() && contentNote.isEmpty()) {
-            showToast(getString(R.string.msg_note_empty_error));
-        } else {
-            if (editedNoteID >= 0) {
-                editedNote.setTitle(titleNote);
-                editedNote.setContent(contentNote);
-                editedNote.setHasDeadLine(isDeadline);
-                editedNote.setDateDeadline(dateDeadline);
-                App.getNotesRepository().updateNote(editedNote);
-                showToast(getString(R.string.msg_note_succes));
-            } else {
-                Note newNote = new Note(titleNote, contentNote, dateDeadline, isDeadline);
-                App.getNotesRepository().saveNote(newNote);
-
-
-                showToast(getString(R.string.msg_note_added));
-            }
-
-            finish();
-        }
+    private void updateNote(String titleNote, String contentNote, String deadlineNote, boolean isDeadline, Date dateDeadline) {
+        Note editedNote = App.getNotesRepository().getNoteById(editedNoteID);
+        editedNote.setTitle(titleNote);
+        editedNote.setContent(contentNote);
+        editedNote.setHasDeadLine(isDeadline);
+        editedNote.setDateDeadline(dateDeadline);
+        App.getNotesRepository().updateNote(editedNote);
+        Toast.makeText(this, getString(R.string.msg_note_succes), Toast.LENGTH_SHORT).show();
     }
 }
 

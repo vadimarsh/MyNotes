@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">MyNotes</string>
+    <string name="app_name">"Заметки"</string>
     <string name="message_dialog_note_delete">Вы уверены что хотите удалить эту заметку?</string>
     <string name="title_dialog_note_delete">Подтвердите действие</string>
     <string name="text_button_confirm">Подвердить</string>
@@ -10,6 +10,8 @@
     <string name="msg_note_empty_error">Необходимо заполнить заголовок или тело заметки</string>
     <string name="msg_note_succes">Изменения внесены упешно</string>
     <string name="msg_note_added">Новая заметка добавлена</string>
+    <string name="msg_pin_length_err">Пин должен состоять из 4 цифр</string>
+    <string name="msg_confirm_exit">Нажмите еще раз чтобы выйти</string>
     <string name="date_format_pattern">dd-MM-yyyy</string>
     <string name="menu_item_settings">Настройки</string>
     <string name="menu_item_save">Сохранить</string>
@@ -19,7 +21,7 @@
     <string name="tv_enter_pin">Введите пин-код</string>
     <string name="auth_invalid_pin">Неверный пин-код</string>
     <string name="settings_explanation">Введите новый пин-код</string>
-    <string name="settings_hint">введите четыре цифры</string>
+    <string name="settings_hint">Введите четыре цифры</string>
     <string name="settings_save">Сохранить</string>
     <string name="keyboard_1">1</string>
     <string name="keyboard_2">2</string>
@@ -32,4 +34,5 @@
     <string name="keyboard_9">9</string>
     <string name="keyboard_0">0</string>
     <string name="keyboard_back">←</string>
+
 </resources>

@@ -2,12 +2,11 @@ package com.example.mynotes.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.text.InputType;
-import android.view.MotionEvent;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageButton;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -18,11 +17,10 @@ import com.example.mynotes.R;
 import com.example.mynotes.service.Keystore;
 
 public class SettingsActivity extends AppCompatActivity {
-    private Toolbar myToolbar;
     private EditText etPin;
     private Button btnSave;
-    private ImageButton btnShowPin;
     private Keystore keyStore;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,30 +33,35 @@ public class SettingsActivity extends AppCompatActivity {
         keyStore = App.getKeystore();
         etPin = findViewById(R.id.et_pin);
         btnSave = findViewById(R.id.btn_save_pin);
-        btnShowPin = findViewById(R.id.btn_show_pin);
-        myToolbar = findViewById(R.id.my_toolbar);
+        Toolbar myToolbar = findViewById(R.id.my_toolbar);
         myToolbar.setTitle(getString(R.string.toolbar_title_settings));
         setSupportActionBar(myToolbar);
-
-        btnShowPin.setOnTouchListener(new View.OnTouchListener() {
+        etPin.addTextChangedListener(new TextWatcher() {
             @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                if (event.getAction() == MotionEvent.ACTION_DOWN) { // нажатие
-                    etPin.setInputType(InputType.TYPE_CLASS_NUMBER);
-                    btnShowPin.setImageResource(R.drawable.ic_visibility);
-                } else {
-                    etPin.setInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_VARIATION_PASSWORD);
-                    btnShowPin.setImageResource(R.drawable.ic_visibility_off);
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                if (s.length() > Keystore.PIN_LENGTH) {
+                    etPin.setText(etPin.getText().subSequence(0, etPin.getText().length() - 1));
+                    Toast.makeText(SettingsActivity.this, getString(R.string.msg_pin_length_err), Toast.LENGTH_SHORT).show();
                 }
-                return true;
             }
         });
+
         btnSave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 String enteredPin = etPin.getText().toString();
                 if (Keystore.PIN_LENGTH != enteredPin.length()) {
-                    showToast("Пин должен состоять из 4 цифр ");
+                    Toast.makeText(SettingsActivity.this, getString(R.string.msg_pin_length_err), Toast.LENGTH_SHORT).show();
                     etPin.setText("");
                 } else {
                     keyStore.saveNew(enteredPin);
@@ -69,7 +72,10 @@ public class SettingsActivity extends AppCompatActivity {
         });
     }
 
-    private void showToast(String message) {
-        Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
+    @Override
+    public void onBackPressed() {
+        if (App.getKeystore().hasPin()) {
+            super.onBackPressed();
+        }
     }
 }
