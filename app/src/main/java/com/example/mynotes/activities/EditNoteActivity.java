@@ -107,7 +107,6 @@ public class EditNoteActivity extends AppCompatActivity {
         myToolbar.setTitle(getString(R.string.toolbar_title_new));
         setSupportActionBar(myToolbar);
     }
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_edit_activity, menu);
