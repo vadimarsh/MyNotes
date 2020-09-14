@@ -44,6 +44,9 @@ public class NotesRecyclerAdapter extends RecyclerView.Adapter<NotesRecyclerAdap
     @Override
     public void onBindViewHolder(@NonNull NotesRecyclerAdapter.ViewHolder holder, int position) {
         SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy", Locale.US);
+        holder.tvTitle.setVisibility(View.GONE);
+        holder.tvDescription.setVisibility(View.GONE);
+        holder.tvDate.setVisibility(View.GONE);
 
         String noteTitle = notes.get(position).getTitle();
         String noteContent = notes.get(position).getContent();
@@ -84,10 +87,8 @@ public class NotesRecyclerAdapter extends RecyclerView.Adapter<NotesRecyclerAdap
             public void onClick(DialogInterface dialog, int id) {
                 Note note = notes.get(position);
                 notes.remove(note);
-                notesRepository.deleteById(note);
-
-                //NotesRecyclerAdapter.this.notifyItemRemoved(position);
-                NotesRecyclerAdapter.this.notifyDataSetChanged(); //Почему-то коряво работает, пришлось вставить notifyItemRemoved()
+                notesRepository.deleteNote(note);
+                NotesRecyclerAdapter.this.notifyDataSetChanged();
             }
         });
         dialogBuilder.setNegativeButton(R.string.text_button_cancel, new DialogInterface.OnClickListener() {

@@ -32,7 +32,7 @@ public class DBNotesRepository implements NotesRepository {
     }
 
     @Override
-    public void deleteById(Note note) {
+    public void deleteNote(Note note) {
         noteDatabase.NoteDao().delete(note);
     }
 

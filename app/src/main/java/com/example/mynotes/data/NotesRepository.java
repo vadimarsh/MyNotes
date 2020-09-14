@@ -9,7 +9,7 @@ public interface NotesRepository {
 
     void saveNote(Note note);
 
-    void deleteById(Note note);
+    void deleteNote(Note note);
 
     void updateNote(Note note);
 }
